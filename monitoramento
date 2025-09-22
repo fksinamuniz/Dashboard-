@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Saúde Pública - Parauapebas/PA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-icon {
+            background: #dbeafe;
+            border-radius: 50%;
+            padding: 12px;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .header-content h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .header-content p {
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .header-timestamp {
+            font-size: 14px;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            padding: 24px;
+            border-left: 4px solid;
+        }
+
+        .section-header.blue {
+            border-left-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .section-header.green {
+            border-left-color: #10b981;
+            background: #ecfdf5;
+        }
+
+        .section-header.purple {
+            border-left-color: #8b5cf6;
+            background: #f3e8ff;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .section-header.blue h2 {
+            color: #1e3a8a;
+        }
+
+        .section-header.green h2 {
+            color: #065f46;
+        }
+
+        .section-header.purple h2 {
+            color: #581c87;
+        }
+
+        .section-header p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .section-content {
+            padding: 24px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .metric-card {
+            padding: 24px;
+            border-radius: 8px;
+            border: 2px solid;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-card.blue {
+            border-color: #bfdbfe;
+            background: #eff6ff;
+        }
+
+        .metric-card.green {
+            border-color: #bbf7d0;
+            background: #ecfdf5;
+        }
+
+        .metric-card.yellow {
+            border-color: #fde68a;
+            background: #fffbeb;
+        }
+
+        .metric-card.red {
+            border-color: #fecaca;
+            background: #fef2f2;
+        }
+
+        .metric-card.purple {
+            border-color: #ddd6fe;
+            background: #f5f3ff;
+        }
+
+        .metric-card.indigo {
+            border-color: #c7d2fe;
+            background: #eef2ff;
+        }
+
+        .metric-card.pink {
+            border-color: #fbcfe8;
+            background: #fdf2f8;
+        }
+
+        .metric-card.teal {
+            border-color: #99f6e4;
+            background: #f0fdfa;
+        }
+
+        .metric-card-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .metric-info {
+            flex: 1;
+        }
+
+        .metric-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .metric-subtitle {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+        }
+
+        .metric-trend {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .metric-trend.positive {
+            color: #059669;
+        }
+
+        .metric-trend.negative {
+            color: #dc2626;
+        }
+
+        .metric-icon {
+            padding: 12px;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .metric-icon.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .metric-icon.green {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .metric-icon.yellow {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .metric-icon.red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .metric-icon.purple {
+            background: #e9d5ff;
+            color: #7c3aed;
+        }
+
+        .metric-icon.indigo {
+            background: #c7d2fe;
+            color: #4f46e5;
+        }
+
+        .metric-icon.pink {
+            background: #fbcfe8;
+            color: #ec4899;
+        }
+
+        .metric-icon.teal {
+            background: #99f6e4;
+            color: #0d9488;
+        }
+
+        .feature-box {
+            margin-top: 24px;
+            background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+            border-radius: 8px;
+            padding: 24px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .feature-box.yellow {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-color: #fde68a;
+        }
+
+        .feature-box-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .feature-box-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .feature-box.blue .feature-box-header h3 {
+            color: #1e3a8a;
+        }
+
+        .feature-box.yellow .feature-box-header h3 {
+            color: #92400e;
+        }
+
+        .feature-box-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 16px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .feature-item h4 {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .feature-item p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .alert-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .alert-item.warning {
+            border-color: #fde68a;
+        }
+
+        .alert-item.critical {
+            border-color: #fecaca;
+        }
+
+        .alert-item.success {
+            border-color: #bbf7d0;
+        }
+
+        .alert-content h4 {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 2px;
+        }
+
+        .alert-content p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .alert-badge {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .alert-badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .alert-badge.critical {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .alert-badge.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .footer {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-item span {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .footer-icon {
+            width: 20px;
+            height: 20px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-content h1 {
+                font-size: 20px;
+            }
+
+            .section-content {
+                padding: 16px;
+            }
+
+            .metric-card {
+                padding: 16px;
+            }
+
+            .metric-value {
+                font-size: 24px;
+            }
+
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho do Dashboard -->
+        <div class="header">
+            <div class="header-icon">
+                🏥
+            </div>
+            <div class="header-content">
+                <h1>Dashboard de Saúde Pública - Parauapebas/PA</h1>
+                <p>Sistema integrado de monitoramento de indicadores de saúde municipal</p>
+                <div class="header-timestamp">
+                    🕒 <span id="lastUpdate">Última atualização: </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔹 1. ATENÇÃO PRIMÁRIA (APS) -->
+        <div class="section">
+            <div class="section-header blue">
+                <h2>🔹 Atenção Primária (APS)</h2>
+                <p>Cobertura ESF/ACS, consultas, vacinação e acompanhamento de crônicos</p>
+            </div>
+            <div class="section-content">
+                <div class="grid">
+                    <div class="metric-card blue">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Cobertura ESF/ACS</div>
+                                <div class="metric-value">87.3%</div>
+                                <div class="metric-subtitle">População cadastrada</div>
+                                <div class="metric-trend positive">
+                                    📈 +2.1%
+                                </div>
+                            </div>
+                            <div class="metric-icon blue">
+                                👥
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card green">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Consultas Médicas</div>
+                                <div class="metric-value">15.847</div>
+                                <div class="metric-subtitle">Mês atual</div>
+                                <div class="metric-trend positive">
+                                    📈 +5.2%
+                                </div>
+                            </div>
+                            <div class="metric-icon green">
+                                🩺
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card teal">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Consultas Enfermagem</div>
+                                <div class="metric-value">8.935</div>
+                                <div class="metric-subtitle">Mês atual</div>
+                                <div class="metric-trend positive">
+                                    📈 +1.8%
+                                </div>
+                            </div>
+                            <div class="metric-icon teal">
+                                ❤️
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card purple">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Atend. Multiprofissional</div>
+                                <div class="metric-value">4.521</div>
+                                <div class="metric-subtitle">Mês atual</div>
+                                <div class="metric-trend positive">
+                                    📈 +3.4%
+                                </div>
+                            </div>
+                            <div class="metric-icon purple">
+                                ✅
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card pink">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Pré-natal</div>
+                                <div class="metric-value">892</div>
+                                <div class="metric-subtitle">Gestantes acompanhadas</div>
+                            </div>
+                            <div class="metric-icon pink">
+                                👶
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card indigo">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Preventivos</div>
+                                <div class="metric-value">1.234</div>
+                                <div class="metric-subtitle">Exames realizados</div>
+                            </div>
+                            <div class="metric-icon indigo">
+                                🛡️
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card green">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Puericultura</div>
+                                <div class="metric-value">567</div>
+                                <div class="metric-subtitle">Crianças acompanhadas</div>
+                            </div>
+                            <div class="metric-icon green">
+                                ⚡
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card blue">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Saúde do Idoso</div>
+                                <div class="metric-value">2.341</div>
+                                <div class="metric-subtitle">Idosos acompanhados</div>
+                            </div>
+                            <div class="metric-icon blue">
+                                👴
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card red">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Hipertensos</div>
+                                <div class="metric-value">4.827</div>
+                                <div class="metric-subtitle">Controlados: 78.5%</div>
+                                <div class="metric-trend negative">
+                                    📉 -1.2%
+                                </div>
+                            </div>
+                            <div class="metric-icon red">
+                                🌡️
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card yellow">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Diabéticos</div>
+                                <div class="metric-value">1.935</div>
+                                <div class="metric-subtitle">Controlados: 82.1%</div>
+                                <div class="metric-trend positive">
+                                    📈 +0.8%
+                                </div>
+                            </div>
+                            <div class="metric-icon yellow">
+                                💊
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card green">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Cobertura Vacinal</div>
+                                <div class="metric-value">91.4%</div>
+                                <div class="metric-subtitle">Poliomielite + Influenza</div>
+                                <div class="metric-trend positive">
+                                    📈 +4.2%
+                                </div>
+                            </div>
+                            <div class="metric-icon green">
+                                💉
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card indigo">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Teleconsultas</div>
+                                <div class="metric-value">342</div>
+                                <div class="metric-subtitle">Mês atual</div>
+                                <div class="metric-trend positive">
+                                    📈 +15.3%
+                                </div>
+                            </div>
+                            <div class="metric-icon indigo">
+                                📱
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔹 2. MÉDIA E ALTA COMPLEXIDADE (MAC) -->
+        <div class="section">
+            <div class="section-header green">
+                <h2>🔹 Média e Alta Complexidade (MAC)</h2>
+                <p>Regulação, especialidades, procedimentos e urgência/emergência</p>
+            </div>
+            <div class="section-content">
+                <div class="grid">
+                    <div class="metric-card yellow">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Tempo Médio Espera</div>
+                                <div class="metric-value">23 dias</div>
+                                <div class="metric-subtitle">Consultas especializadas</div>
+                                <div class="metric-trend positive">
+                                    📈 -8.5%
+                                </div>
+                            </div>
+                            <div class="metric-icon yellow">
+                                🕒
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card red">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Cardiologia</div>
+                                <div class="metric-value">245</div>
+                                <div class="metric-subtitle">Consultas mês</div>
+                            </div>
+                            <div class="metric-icon red">
+                                ❤️
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card blue">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Dermatologia</div>
+                                <div class="metric-value">167</div>
+                                <div class="metric-subtitle">Consultas mês</div>
+                            </div>
+                            <div class="metric-icon blue">
+                                👁️
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card purple">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Psiquiatria</div>
+                                <div class="metric-value">89</div>
+                                <div class="metric-subtitle">Consultas mês</div>
+                            </div>
+                            <div class="metric-icon purple">
+                                🧠
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card teal">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Raio-X</div>
+                                <div class="metric-value">1.456</div>
+                                <div class="metric-subtitle">Exames realizados</div>
+                            </div>
+                            <div class="metric-icon teal">
+                                📷
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card indigo">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Ultrassonografia</div>
+                                <div class="metric-value">834</div>
+                                <div class="metric-subtitle">Exames realizados</div>
+                            </div>
+                            <div class="metric-icon indigo">
+                                🩺
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card purple">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Tomografia</div>
+                                <div class="metric-value">127</div>
+                                <div class="metric-subtitle">Exames realizados</div>
+                            </div>
+                            <div class="metric-icon purple">
+                                🔬
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card green">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Cirurgias Eletivas</div>
+                                <div class="metric-value">89</div>
+                                <div class="metric-subtitle">Procedimentos mês</div>
+                            </div>
+                            <div class="metric-icon green">
+                                🏥
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card yellow">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Taxa Ocupação Leitos</div>
+                                <div class="metric-value">76.8%</div>
+                                <div class="metric-subtitle">Leitos hospitalares</div>
+                                <div class="metric-trend positive">
+                                    📈 -2.3%
+                                </div>
+                            </div>
+                            <div class="metric-icon yellow">
+                                🏢
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card blue">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Tempo Médio Internação</div>
+                                <div class="metric-value">4.2 dias</div>
+                                <div class="metric-subtitle">Média geral</div>
+                            </div>
+                            <div class="metric-icon blue">
+                                ⏱️
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card red">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Taxa Reinternação</div>
+                                <div class="metric-value">8.7%</div>
+                                <div class="metric-subtitle">30 dias</div>
+                                <div class="metric-trend positive">
+                                    📈 -1.8%
+                                </div>
+                            </div>
+                            <div class="metric-icon red">
+                                ⚠️
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card red">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Atendimentos UPA</div>
+                                <div class="metric-value">3.847</div>
+                                <div class="metric-subtitle">Mês atual</div>
+                                <div class="metric-trend negative">
+                                    📉 +7.2%
+                                </div>
+                            </div>
+                            <div class="metric-icon red">
+                                🚨
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔹 3. REDES DE ATENÇÃO / INTEGRAÇÃO -->
+        <div class="section">
+            <div class="section-header purple">
+                <h2>🔹 Redes de Atenção / Integração</h2>
+                <p>RAPS, Rede Cegonha, Rede de Urgência e indicadores de vigilância</p>
+            </div>
+            <div class="section-content">
+                <div class="grid">
+                    <div class="metric-card purple">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">CAPS Atendimentos</div>
+                                <div class="metric-value">789</div>
+                                <div class="metric-subtitle">Saúde Mental</div>
+                            </div>
+                            <div class="metric-icon purple">
+                                🧠
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card indigo">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Leitos Psiquiátricos</div>
+                                <div class="metric-value">12</div>
+                                <div class="metric-subtitle">Disponíveis</div>
+                            </div>
+                            <div class="metric-icon indigo">
+                                🏥
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card red">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Acolhimentos Crise</div>
+                                <div class="metric-value">67</div>
+                                <div class="metric-subtitle">Mês atual</div>
+                            </div>
+                            <div class="metric-icon red">
+                                ⚠️
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card green">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Partos Normais</div>
+                                <div class="metric-value">68.4%</div>
+                                <div class="metric-subtitle">vs 31.6% cesáreas</div>
+                                <div class="metric-trend positive">
+                                    📈 +2.8%
+                                </div>
+                            </div>
+                            <div class="metric-icon green">
+                                👶
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card red">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Mortalidade Infantil</div>
+                                <div class="metric-value">9.2</div>
+                                <div class="metric-subtitle">Por 1000 nascidos vivos</div>
+                                <div class="metric-trend positive">
+                                    📈 -12.3%
+                                </div>
+                            </div>
+                            <div class="metric-icon red">
+                                📊
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card green">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Mortalidade Materna</div>
+                                <div class="metric-value">0</div>
+                                <div class="metric-subtitle">Casos no ano</div>
+                            </div>
+                            <div class="metric-icon green">
+                                ✅
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card yellow">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Tempo Resposta SAMU</div>
+                                <div class="metric-value">8.5 min</div>
+                                <div class="metric-subtitle">Média urbana</div>
+                            </div>
+                            <div class="metric-icon yellow">
+                                🚑
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card red">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Hipertensão</div>
+                                <div class="metric-value">18.7%</div>
+                                <div class="metric-subtitle">Prevalência população</div>
+                            </div>
+                            <div class="metric-icon red">
+                                💓
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card yellow">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Diabetes</div>
+                                <div class="metric-value">7.3%</div>
+                                <div class="metric-subtitle">Prevalência população</div>
+                            </div>
+                            <div class="metric-icon yellow">
+                                🩸
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card yellow">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Obesidade</div>
+                                <div class="metric-value">23.1%</div>
+                                <div class="metric-subtitle">Prevalência adultos</div>
+                            </div>
+                            <div class="metric-icon yellow">
+                                ⚖️
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card blue">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Saúde Bucal</div>
+                                <div class="metric-value">2.847</div>
+                                <div class="metric-subtitle">Procedimentos mês</div>
+                            </div>
+                            <div class="metric-icon blue">
+                                🦷
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card yellow">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Dengue</div>
+                                <div class="metric-value">23</div>
+                                <div class="metric-subtitle">Casos confirmados</div>
+                                <div class="metric-trend positive">
+                                    📈 -45.2%
+                                </div>
+                            </div>
+                            <div class="metric-icon yellow">
+                                🦟
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔹 RECURSOS AVANÇADOS -->
+        <div class="section">
+            <div class="section-header blue">
+                <h2>🔹 Recursos Avançados</h2>
+                <p>Georreferenciamento, alertas, metas e financiamento</p>
+            </div>
+            <div class="section-content">
+                <div class="grid">
+                    <div class="metric-card green">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Meta Previne Brasil</div>
+                                <div class="metric-value">89.7%</div>
+                                <div class="metric-subtitle">Realizado vs Meta</div>
+                                <div class="metric-trend positive">
+                                    📈 +4.5%
+                                </div>
+                            </div>
+                            <div class="metric-icon green">
+                                🎯
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card blue">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Repasse Federal</div>
+                                <div class="metric-value">R$ 2,3M</div>
+                                <div class="metric-subtitle">Mês atual</div>
+                            </div>
+                            <div class="metric-icon blue">
+                                💰
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card indigo">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Custo per Capita</div>
+                                <div class="metric-value">R$ 247</div>
+                                <div class="metric-subtitle">Mês/habitante</div>
+                            </div>
+                            <div class="metric-icon indigo">
+                                📊
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card red">
+                        <div class="metric-card-content">
+                            <div class="metric-info">
+                                <div class="metric-title">Alertas Ativos</div>
+                                <div class="metric-value">3</div>
+                                <div class="metric-subtitle">Requerem atenção</div>
+                            </div>
+                            <div class="metric-icon red">
+                                🚨
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-box blue">
+                    <div class="feature-box-header">
+                        <span style="font-size: 20px;">📍</span>
+                        <h3>Mapa Georreferenciado</h3>
+                    </div>
+                    <div class="feature-box-content">
+                        <div class="feature-item">
+                            <h4>Cobertura por Bairro</h4>
+                            <p>Visualização da cobertura ESF por região</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>Incidência de Doenças</h4>
+                            <p>Mapa de calor de arboviroses</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>Tempo de Espera</h4>
+                            <p>Especialidades por localidade</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-box yellow">
+                    <div class="feature-box-header">
+                        <span style="font-size: 20px;">⚠️</span>
+                        <h3>Alertas em Tempo Real</h3>
+                    </div>
+                    <div>
+                        <div class="alert-item warning">
+                            <div class="alert-content">
+                                <h4>Baixa cobertura vacinal - Setor 7</h4>
+                                <p>Influenza: 67.2% (Meta: 90%)</p>
+                            </div>
+                            <span class="alert-badge warning">Atenção</span>
+                        </div>
+                        <div class="alert-item critical">
+                            <div class="alert-content">
+                                <h4>Aumento de espera - Cardiologia</h4>
+                                <p>Tempo médio: 35 dias (Meta: 30 dias)</p>
+                            </div>
+                            <span class="alert-badge critical">Crítico</span>
+                        </div>
+                        <div class="alert-item success">
+                            <div class="alert-content">
+                                <h4>Meta alcançada - Pré-natal</h4>
+                                <p>Cobertura: 94.3% (Meta: 90%)</p>
+                            </div>
+                            <span class="alert-badge success">Sucesso</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-item">
+                <span class="footer-icon" style="color: #2563eb;">⚡</span>
+                <span>Sistema integrado com e-SUS, SISREG, SINAN e DATASUS</span>
+            </div>
+            <div class="footer-item">
+                <span class="footer-icon" style="color: #059669;">✅</span>
+                <span>Dados atualizados em tempo real</span>
+            </div>
+            <div class="footer-item">
+                <span class="footer-icon" style="color: #7c3aed;">🛡️</span>
+                <span>Conformidade LGPD e padrões de segurança</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Atualizar timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('pt-BR');
+            const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('lastUpdate').textContent = `Última atualização: ${dateStr} às ${timeStr}`;
+        }
+
+        // Inicializar
+        updateTimestamp();
+
+        // Atualizar timestamp a cada minuto
+        setInterval(updateTimestamp, 60000);
+
+        // Adicionar interatividade aos cards
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard de Saúde carregado com sucesso!');
+        });
+    </script>
+</body>
+</html>
