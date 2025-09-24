@@ -4,1174 +4,1137 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Saúde Pública - Parauapebas/PA</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .tab-content {
+            display: none;
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            min-height: 100vh;
-            line-height: 1.6;
-            color: #1f2937;
+        .tab-content.active {
+            display: block;
         }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
+        .tab-button.active {
+            background-color: rgb(219 234 254);
+            color: rgb(29 78 216);
+            border-right: 4px solid rgb(59 130 246);
         }
-
-        .header {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            padding: 24px;
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .header-icon {
-            background: #dbeafe;
-            border-radius: 50%;
-            padding: 12px;
-            width: 64px;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .header-content h1 {
-            font-size: 24px;
-            font-weight: bold;
-            color: #1f2937;
-            margin-bottom: 8px;
-        }
-
-        .header-content p {
-            color: #6b7280;
-            margin-bottom: 8px;
-        }
-
-        .header-timestamp {
-            font-size: 14px;
-            color: #9ca3af;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .section {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            overflow: hidden;
-            margin-bottom: 32px;
-        }
-
-        .section-header {
-            padding: 24px;
-            border-left: 4px solid;
-        }
-
-        .section-header.blue {
-            border-left-color: #3b82f6;
-            background: #eff6ff;
-        }
-
-        .section-header.green {
-            border-left-color: #10b981;
-            background: #ecfdf5;
-        }
-
-        .section-header.purple {
-            border-left-color: #8b5cf6;
-            background: #f3e8ff;
-        }
-
-        .section-header h2 {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-
-        .section-header.blue h2 {
-            color: #1e3a8a;
-        }
-
-        .section-header.green h2 {
-            color: #065f46;
-        }
-
-        .section-header.purple h2 {
-            color: #581c87;
-        }
-
-        .section-header p {
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .section-content {
-            padding: 24px;
-        }
-
-        .grid {
-            display: grid;
-            gap: 24px;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        }
-
         .metric-card {
-            padding: 24px;
-            border-radius: 8px;
-            border: 2px solid;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
-
         .metric-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-
-        .metric-card.blue {
-            border-color: #bfdbfe;
-            background: #eff6ff;
+        .nav-card {
+            transition: all 0.3s ease;
         }
-
-        .metric-card.green {
-            border-color: #bbf7d0;
-            background: #ecfdf5;
-        }
-
-        .metric-card.yellow {
-            border-color: #fde68a;
-            background: #fffbeb;
-        }
-
-        .metric-card.red {
-            border-color: #fecaca;
-            background: #fef2f2;
-        }
-
-        .metric-card.purple {
-            border-color: #ddd6fe;
-            background: #f5f3ff;
-        }
-
-        .metric-card.indigo {
-            border-color: #c7d2fe;
-            background: #eef2ff;
-        }
-
-        .metric-card.pink {
-            border-color: #fbcfe8;
-            background: #fdf2f8;
-        }
-
-        .metric-card.teal {
-            border-color: #99f6e4;
-            background: #f0fdfa;
-        }
-
-        .metric-card-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .metric-info {
-            flex: 1;
-        }
-
-        .metric-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #6b7280;
-            margin-bottom: 8px;
-        }
-
-        .metric-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: #1f2937;
-            margin-bottom: 4px;
-        }
-
-        .metric-subtitle {
-            font-size: 14px;
-            color: #9ca3af;
-            margin-bottom: 8px;
-        }
-
-        .metric-trend {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .metric-trend.positive {
-            color: #059669;
-        }
-
-        .metric-trend.negative {
-            color: #dc2626;
-        }
-
-        .metric-icon {
-            padding: 12px;
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .metric-icon.blue {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-
-        .metric-icon.green {
-            background: #d1fae5;
-            color: #059669;
-        }
-
-        .metric-icon.yellow {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .metric-icon.red {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        .metric-icon.purple {
-            background: #e9d5ff;
-            color: #7c3aed;
-        }
-
-        .metric-icon.indigo {
-            background: #c7d2fe;
-            color: #4f46e5;
-        }
-
-        .metric-icon.pink {
-            background: #fbcfe8;
-            color: #ec4899;
-        }
-
-        .metric-icon.teal {
-            background: #99f6e4;
-            color: #0d9488;
-        }
-
-        .feature-box {
-            margin-top: 24px;
-            background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
-            border-radius: 8px;
-            padding: 24px;
-            border: 1px solid #bfdbfe;
-        }
-
-        .feature-box.yellow {
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            border-color: #fde68a;
-        }
-
-        .feature-box-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .feature-box-header h3 {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .feature-box.blue .feature-box-header h3 {
-            color: #1e3a8a;
-        }
-
-        .feature-box.yellow .feature-box-header h3 {
-            color: #92400e;
-        }
-
-        .feature-box-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-        }
-
-        .feature-item {
-            background: white;
-            padding: 16px;
-            border-radius: 6px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .feature-item h4 {
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 4px;
-        }
-
-        .feature-item p {
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .alert-item {
-            background: white;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .alert-item.warning {
-            border-color: #fde68a;
-        }
-
-        .alert-item.critical {
-            border-color: #fecaca;
-        }
-
-        .alert-item.success {
-            border-color: #bbf7d0;
-        }
-
-        .alert-content h4 {
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 2px;
-        }
-
-        .alert-content p {
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .alert-badge {
-            font-size: 12px;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-weight: 600;
-        }
-
-        .alert-badge.warning {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .alert-badge.critical {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .alert-badge.success {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .footer {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            padding: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .footer-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .footer-item span {
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .footer-icon {
-            width: 20px;
-            height: 20px;
-            font-size: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 16px;
-            }
-
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .header-content h1 {
-                font-size: 20px;
-            }
-
-            .section-content {
-                padding: 16px;
-            }
-
-            .metric-card {
-                padding: 16px;
-            }
-
-            .metric-value {
-                font-size: 24px;
-            }
-
-            .footer {
-                flex-direction: column;
-                text-align: center;
-            }
+        .nav-card:hover {
+            transform: translateY(-1px);
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <!-- Cabeçalho do Dashboard -->
-        <div class="header">
-            <div class="header-icon">
-                🏥
-            </div>
-            <div class="header-content">
-                <h1>Dashboard de Saúde Pública - Parauapebas/PA</h1>
-                <p>Sistema integrado de monitoramento de indicadores de saúde municipal</p>
-                <div class="header-timestamp">
-                    🕒 <span id="lastUpdate">Última atualização: </span>
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen">
+        <!-- Mobile menu backdrop -->
+        <div id="mobile-backdrop" class="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden hidden"></div>
+        
+        <!-- Sidebar -->
+        <div id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 -translate-x-full">
+            <div class="p-4 lg:p-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="activity" class="h-6 w-6 lg:h-8 lg:w-8 text-blue-600"></i>
+                        <div>
+                            <h1 class="text-lg lg:text-xl font-bold text-gray-800">Painel de Saúde</h1>
+                            <p class="text-xs lg:text-sm text-gray-600">Parauapebas - PA</p>
+                        </div>
+                    </div>
+                    <!-- Close button for mobile -->
+                    <button id="close-sidebar" class="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i data-lucide="x" class="h-6 w-6"></i>
+                    </button>
                 </div>
             </div>
+            
+            <nav class="mt-6">
+                <div class="space-y-1">
+                    <button class="tab-button w-full flex items-center px-4 lg:px-6 py-3 text-sm font-medium rounded-lg mx-4 transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" 
+                            data-tab="visao-geral">
+                        <i data-lucide="bar-chart-3" class="mr-3 h-5 w-5"></i>
+                        Visão Geral
+                    </button>
+                    
+                    <button class="tab-button w-full flex items-center px-4 lg:px-6 py-3 text-sm font-medium rounded-lg mx-4 transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" 
+                            data-tab="atencao-primaria">
+                        <i data-lucide="activity" class="mr-3 h-5 w-5"></i>
+                        Atenção Primária
+                    </button>
+                    
+                    <button class="tab-button w-full flex items-center px-4 lg:px-6 py-3 text-sm font-medium rounded-lg mx-4 transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" 
+                            data-tab="atencao-especializada">
+                        <i data-lucide="stethoscope" class="mr-3 h-5 w-5"></i>
+                        Atenção Especializada
+                    </button>
+                    
+                    <button class="tab-button w-full flex items-center px-4 lg:px-6 py-3 text-sm font-medium rounded-lg mx-4 transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" 
+                            data-tab="redes-integracao">
+                        <i data-lucide="network" class="mr-3 h-5 w-5"></i>
+                        Redes / Integração
+                    </button>
+                </div>
+            </nav>
         </div>
 
-        <!-- 🔹 1. ATENÇÃO PRIMÁRIA (APS) -->
-        <div class="section">
-            <div class="section-header blue">
-                <h2>🔹 Atenção Primária (APS)</h2>
-                <p>Cobertura ESF/ACS, consultas, vacinação e acompanhamento de crônicos</p>
-            </div>
-            <div class="section-content">
-                <div class="grid">
-                    <div class="metric-card blue">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Cobertura ESF/ACS</div>
-                                <div class="metric-value">87.3%</div>
-                                <div class="metric-subtitle">População cadastrada</div>
-                                <div class="metric-trend positive">
-                                    📈 +2.1%
-                                </div>
-                            </div>
-                            <div class="metric-icon blue">
-                                👥
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card green">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Consultas Médicas</div>
-                                <div class="metric-value">15.847</div>
-                                <div class="metric-subtitle">Mês atual</div>
-                                <div class="metric-trend positive">
-                                    📈 +5.2%
-                                </div>
-                            </div>
-                            <div class="metric-icon green">
-                                🩺
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card teal">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Consultas Enfermagem</div>
-                                <div class="metric-value">8.935</div>
-                                <div class="metric-subtitle">Mês atual</div>
-                                <div class="metric-trend positive">
-                                    📈 +1.8%
-                                </div>
-                            </div>
-                            <div class="metric-icon teal">
-                                ❤️
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card purple">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Atend. Multiprofissional</div>
-                                <div class="metric-value">4.521</div>
-                                <div class="metric-subtitle">Mês atual</div>
-                                <div class="metric-trend positive">
-                                    📈 +3.4%
-                                </div>
-                            </div>
-                            <div class="metric-icon purple">
-                                ✅
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card pink">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Pré-natal</div>
-                                <div class="metric-value">892</div>
-                                <div class="metric-subtitle">Gestantes acompanhadas</div>
-                            </div>
-                            <div class="metric-icon pink">
-                                👶
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card indigo">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Preventivos</div>
-                                <div class="metric-value">1.234</div>
-                                <div class="metric-subtitle">Exames realizados</div>
-                            </div>
-                            <div class="metric-icon indigo">
-                                🛡️
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card green">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Puericultura</div>
-                                <div class="metric-value">567</div>
-                                <div class="metric-subtitle">Crianças acompanhadas</div>
-                            </div>
-                            <div class="metric-icon green">
-                                ⚡
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card blue">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Saúde do Idoso</div>
-                                <div class="metric-value">2.341</div>
-                                <div class="metric-subtitle">Idosos acompanhados</div>
-                            </div>
-                            <div class="metric-icon blue">
-                                👴
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card red">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Hipertensos</div>
-                                <div class="metric-value">4.827</div>
-                                <div class="metric-subtitle">Controlados: 78.5%</div>
-                                <div class="metric-trend negative">
-                                    📉 -1.2%
-                                </div>
-                            </div>
-                            <div class="metric-icon red">
-                                🌡️
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card yellow">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Diabéticos</div>
-                                <div class="metric-value">1.935</div>
-                                <div class="metric-subtitle">Controlados: 82.1%</div>
-                                <div class="metric-trend positive">
-                                    📈 +0.8%
-                                </div>
-                            </div>
-                            <div class="metric-icon yellow">
-                                💊
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card green">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Cobertura Vacinal</div>
-                                <div class="metric-value">91.4%</div>
-                                <div class="metric-subtitle">Poliomielite + Influenza</div>
-                                <div class="metric-trend positive">
-                                    📈 +4.2%
-                                </div>
-                            </div>
-                            <div class="metric-icon green">
-                                💉
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card indigo">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Teleconsultas</div>
-                                <div class="metric-value">342</div>
-                                <div class="metric-subtitle">Mês atual</div>
-                                <div class="metric-trend positive">
-                                    📈 +15.3%
-                                </div>
-                            </div>
-                            <div class="metric-icon indigo">
-                                📱
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="px-4 lg:px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <!-- Mobile menu button -->
+                            <button id="open-sidebar" class="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <i data-lucide="menu" class="h-6 w-6"></i>
+                            </button>
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">
+                                    Sistema Municipal de Saúde de Parauapebas
+                                </h2>
+                                <p class="text-sm text-gray-600 hidden sm:block">
+                                    Monitoramento e análise de indicadores de saúde
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- 🔹 2. MÉDIA E ALTA COMPLEXIDADE (MAC) -->
-        <div class="section">
-            <div class="section-header green">
-                <h2>🔹 Média e Alta Complexidade (MAC)</h2>
-                <p>Regulação, especialidades, procedimentos e urgência/emergência</p>
-            </div>
-            <div class="section-content">
-                <div class="grid">
-                    <div class="metric-card yellow">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Tempo Médio Espera</div>
-                                <div class="metric-value">23 dias</div>
-                                <div class="metric-subtitle">Consultas especializadas</div>
-                                <div class="metric-trend positive">
-                                    📈 -8.5%
+            </header>
+            
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="p-4 lg:p-6">
+                    <!-- Visão Geral Tab -->
+                    <div id="visao-geral" class="tab-content">
+                        <div class="space-y-8">
+                            <!-- Cabeçalho do Dashboard -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+                                <div class="flex items-center space-x-4">
+                                    <div class="p-3 bg-blue-100 rounded-full">
+                                        <i data-lucide="activity" class="h-8 w-8 text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <h1 class="text-2xl font-bold text-gray-900">
+                                            Visão Geral - Sistema de Saúde de Parauapebas/PA
+                                        </h1>
+                                        <p class="text-gray-600">
+                                            Resumo executivo dos principais indicadores de saúde municipal
+                                        </p>
+                                        <div class="flex items-center mt-2 text-sm text-gray-500">
+                                            <i data-lucide="clock" class="h-4 w-4 mr-1"></i>
+                                            Última atualização: <span id="current-date"></span> às <span id="current-time"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="metric-icon yellow">
-                                🕒
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="metric-card red">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Cardiologia</div>
-                                <div class="metric-value">245</div>
-                                <div class="metric-subtitle">Consultas mês</div>
-                            </div>
-                            <div class="metric-icon red">
-                                ❤️
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card blue">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Dermatologia</div>
-                                <div class="metric-value">167</div>
-                                <div class="metric-subtitle">Consultas mês</div>
-                            </div>
-                            <div class="metric-icon blue">
-                                👁️
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card purple">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Psiquiatria</div>
-                                <div class="metric-value">89</div>
-                                <div class="metric-subtitle">Consultas mês</div>
-                            </div>
-                            <div class="metric-icon purple">
-                                🧠
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card teal">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Raio-X</div>
-                                <div class="metric-value">1.456</div>
-                                <div class="metric-subtitle">Exames realizados</div>
-                            </div>
-                            <div class="metric-icon teal">
-                                📷
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card indigo">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Ultrassonografia</div>
-                                <div class="metric-value">834</div>
-                                <div class="metric-subtitle">Exames realizados</div>
-                            </div>
-                            <div class="metric-icon indigo">
-                                🩺
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card purple">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Tomografia</div>
-                                <div class="metric-value">127</div>
-                                <div class="metric-subtitle">Exames realizados</div>
-                            </div>
-                            <div class="metric-icon purple">
-                                🔬
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card green">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Cirurgias Eletivas</div>
-                                <div class="metric-value">89</div>
-                                <div class="metric-subtitle">Procedimentos mês</div>
-                            </div>
-                            <div class="metric-icon green">
-                                🏥
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card yellow">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Taxa Ocupação Leitos</div>
-                                <div class="metric-value">76.8%</div>
-                                <div class="metric-subtitle">Leitos hospitalares</div>
-                                <div class="metric-trend positive">
-                                    📈 -2.3%
+                            <!-- Resumo das Principais Métricas -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                                <div class="px-6 py-4 border-l-4 border-blue-500 bg-blue-50">
+                                    <h2 class="text-xl font-bold text-blue-900">Indicadores-Chave de Performance</h2>
+                                    <p class="text-sm text-gray-600 mt-1">Principais métricas do sistema de saúde municipal</p>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-blue-50 border-blue-200 text-blue-800 bg-white shadow-sm cursor-pointer" onclick="showTab('atencao-primaria')">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Cobertura ESF</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">87.3%</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Atenção Primária</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">+2.1%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-blue-50 border-blue-200 text-blue-800">
+                                                    <i data-lucide="users" class="h-6 w-6 text-blue-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-yellow-50 border-yellow-200 text-yellow-800 bg-white shadow-sm cursor-pointer" onclick="showTab('atencao-especializada')">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Tempo Espera Especializada</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">23 dias</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Média geral</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">-8.5%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-yellow-50 border-yellow-200 text-yellow-800">
+                                                    <i data-lucide="stethoscope" class="h-6 w-6 text-yellow-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-green-50 border-green-200 text-green-800 bg-white shadow-sm cursor-pointer" onclick="showTab('redes-integracao')">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">RAPS Cobertura</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">100%</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Rede Psicossocial</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-green-50 border-green-200 text-green-800">
+                                                    <i data-lucide="network" class="h-6 w-6 text-green-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-green-50 border-green-200 text-green-800 bg-white shadow-sm cursor-pointer" onclick="showTab('redes-integracao')">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Mortalidade Materna</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">0</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Casos no ano</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-green-50 border-green-200 text-green-800">
+                                                    <i data-lucide="check-circle" class="h-6 w-6 text-green-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="metric-icon yellow">
-                                🏢
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="metric-card blue">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Tempo Médio Internação</div>
-                                <div class="metric-value">4.2 dias</div>
-                                <div class="metric-subtitle">Média geral</div>
-                            </div>
-                            <div class="metric-icon blue">
-                                ⏱️
-                            </div>
-                        </div>
-                    </div>
+                            <!-- Navegação Rápida para Seções -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                                <div class="px-6 py-4 border-l-4 border-purple-500 bg-purple-50">
+                                    <h2 class="text-xl font-bold text-purple-900">Acesso Rápido às Seções</h2>
+                                    <p class="text-sm text-gray-600 mt-1">Clique para navegar diretamente para cada área específica</p>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <div class="nav-card p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200 cursor-pointer transition-all" onclick="showTab('atencao-primaria')">
+                                            <div class="flex items-center space-x-3 mb-3">
+                                                <i data-lucide="activity" class="h-6 w-6 text-blue-600"></i>
+                                                <h3 class="text-lg font-semibold text-blue-900">Atenção Primária</h3>
+                                            </div>
+                                            <p class="text-sm text-blue-700 mb-3">ESF, consultas, vacinação, crônicos</p>
+                                            <div class="flex justify-between text-sm">
+                                                <span class="text-blue-600 font-medium">Cobertura ESF: 87.3%</span>
+                                                <span class="text-blue-500">→</span>
+                                            </div>
+                                        </div>
 
-                    <div class="metric-card red">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Taxa Reinternação</div>
-                                <div class="metric-value">8.7%</div>
-                                <div class="metric-subtitle">30 dias</div>
-                                <div class="metric-trend positive">
-                                    📈 -1.8%
+                                        <div class="nav-card p-6 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200 cursor-pointer transition-all" onclick="showTab('atencao-especializada')">
+                                            <div class="flex items-center space-x-3 mb-3">
+                                                <i data-lucide="stethoscope" class="h-6 w-6 text-green-600"></i>
+                                                <h3 class="text-lg font-semibold text-green-900">Atenção Especializada</h3>
+                                            </div>
+                                            <p class="text-sm text-green-700 mb-3">Especialidades, exames, internações</p>
+                                            <div class="flex justify-between text-sm">
+                                                <span class="text-green-600 font-medium">Espera: 23 dias</span>
+                                                <span class="text-green-500">→</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="nav-card p-6 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg border border-purple-200 cursor-pointer transition-all" onclick="showTab('redes-integracao')">
+                                            <div class="flex items-center space-x-3 mb-3">
+                                                <i data-lucide="network" class="h-6 w-6 text-purple-600"></i>
+                                                <h3 class="text-lg font-semibold text-purple-900">Redes / Integração</h3>
+                                            </div>
+                                            <p class="text-sm text-purple-700 mb-3">RAPS, Rede Cegonha, vigilância</p>
+                                            <div class="flex justify-between text-sm">
+                                                <span class="text-purple-600 font-medium">100% Integrado</span>
+                                                <span class="text-purple-500">→</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="metric-icon red">
-                                ⚠️
+
+                            <!-- Alertas e Status Geral -->
+                            <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-6 border border-yellow-200">
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <i data-lucide="alert-triangle" class="h-6 w-6 text-yellow-600"></i>
+                                    <h3 class="text-lg font-semibold text-yellow-900">Status Geral do Sistema</h3>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-lg border border-yellow-100">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <p class="font-medium text-gray-800">Sistema Operacional</p>
+                                                <p class="text-sm text-gray-600">Todos os componentes funcionando</p>
+                                            </div>
+                                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Normal</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-yellow-100">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <p class="font-medium text-gray-800">Metas Municipais</p>
+                                                <p class="text-sm text-gray-600">89.7% das metas alcançadas</p>
+                                            </div>
+                                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Boa</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Footer com informações adicionais -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+                                <div class="flex items-center justify-between flex-wrap gap-4">
+                                    <div class="flex items-center space-x-3">
+                                        <i data-lucide="activity" class="h-5 w-5 text-blue-600"></i>
+                                        <span class="text-sm text-gray-600">
+                                            Sistema integrado com e-SUS, SISREG, SINAN e DATASUS
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <i data-lucide="check-circle" class="h-5 w-5 text-green-600"></i>
+                                        <span class="text-sm text-gray-600">
+                                            Dados atualizados em tempo real
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="metric-card red">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Atendimentos UPA</div>
-                                <div class="metric-value">3.847</div>
-                                <div class="metric-subtitle">Mês atual</div>
-                                <div class="metric-trend negative">
-                                    📉 +7.2%
+                    <!-- Atenção Primária Tab -->
+                    <div id="atencao-primaria" class="tab-content">
+                        <div class="space-y-8">
+                            <!-- Cabeçalho -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+                                <div class="flex items-center space-x-4">
+                                    <div class="p-3 bg-blue-100 rounded-full">
+                                        <i data-lucide="activity" class="h-8 w-8 text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <h1 class="text-2xl font-bold text-gray-900">
+                                            Atenção Primária à Saúde (APS)
+                                        </h1>
+                                        <p class="text-gray-600">
+                                            Cobertura ESF/ACS, consultas, vacinação e acompanhamento de crônicos
+                                        </p>
+                                        <div class="flex items-center mt-2 text-sm text-gray-500">
+                                            <i data-lucide="clock" class="h-4 w-4 mr-1"></i>
+                                            Última atualização: <span class="current-date"></span> às <span class="current-time"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="metric-icon red">
-                                🚨
+
+                            <!-- Cobertura e Consultas -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                                <div class="px-6 py-4 border-l-4 border-blue-500 bg-blue-50">
+                                    <h2 class="text-xl font-bold text-blue-900">Cobertura e Consultas</h2>
+                                    <p class="text-sm text-gray-600 mt-1">Indicadores de acesso e utilização dos serviços</p>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-blue-50 border-blue-200 text-blue-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Cobertura ESF/ACS</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">87.3%</p>
+                                                    <p class="text-sm text-gray-500 mt-1">População cadastrada</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">+2.1%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-blue-50 border-blue-200 text-blue-800">
+                                                    <i data-lucide="users" class="h-6 w-6 text-blue-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-green-50 border-green-200 text-green-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Consultas Médicas</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">15.847</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Mês atual</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">+5.2%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-green-50 border-green-200 text-green-800">
+                                                    <i data-lucide="stethoscope" class="h-6 w-6 text-green-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-teal-50 border-teal-200 text-teal-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Consultas Enfermagem</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">8.935</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Mês atual</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">+1.8%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-teal-50 border-teal-200 text-teal-800">
+                                                    <i data-lucide="heart" class="h-6 w-6 text-teal-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-purple-50 border-purple-200 text-purple-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Atend. Multiprofissional</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">4.521</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Mês atual</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">+3.4%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-purple-50 border-purple-200 text-purple-800">
+                                                    <i data-lucide="user-check" class="h-6 w-6 text-purple-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Programas Específicos -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                                <div class="px-6 py-4 border-l-4 border-green-500 bg-green-50">
+                                    <h2 class="text-xl font-bold text-green-900">Programas Específicos</h2>
+                                    <p class="text-sm text-gray-600 mt-1">Acompanhamento de grupos prioritários</p>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-pink-50 border-pink-200 text-pink-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Pré-natal</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">892</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Gestantes acompanhadas</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-pink-50 border-pink-200 text-pink-800">
+                                                    <i data-lucide="baby" class="h-6 w-6 text-pink-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-indigo-50 border-indigo-200 text-indigo-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Preventivos</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">1.234</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Exames realizados</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-indigo-50 border-indigo-200 text-indigo-800">
+                                                    <i data-lucide="shield" class="h-6 w-6 text-indigo-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-green-50 border-green-200 text-green-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Puericultura</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">567</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Crianças acompanhadas</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-green-50 border-green-200 text-green-800">
+                                                    <i data-lucide="activity" class="h-6 w-6 text-green-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-blue-50 border-blue-200 text-blue-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Saúde do Idoso</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">2.341</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Idosos acompanhados</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-blue-50 border-blue-200 text-blue-800">
+                                                    <i data-lucide="heart" class="h-6 w-6 text-blue-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Doenças Crônicas -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                                <div class="px-6 py-4 border-l-4 border-orange-500 bg-orange-50">
+                                    <h2 class="text-xl font-bold text-orange-900">Doenças Crônicas</h2>
+                                    <p class="text-sm text-gray-600 mt-1">Controle de hipertensão e diabetes</p>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-red-50 border-red-200 text-red-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Hipertensos</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">4.827</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Controlados: 78.5%</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-red-600"></i>
+                                                        <span class="text-sm font-medium text-red-600">-1.2%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-red-50 border-red-200 text-red-800">
+                                                    <i data-lucide="thermometer" class="h-6 w-6 text-red-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-yellow-50 border-yellow-200 text-yellow-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Diabéticos</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">1.935</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Controlados: 82.1%</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">+0.8%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-yellow-50 border-yellow-200 text-yellow-800">
+                                                    <i data-lucide="pill" class="h-6 w-6 text-yellow-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-green-50 border-green-200 text-green-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Cobertura Vacinal</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">91.4%</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Poliomielite + Influenza</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">+4.2%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-green-50 border-green-200 text-green-800">
+                                                    <i data-lucide="syringe" class="h-6 w-6 text-green-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Resumo de Metas -->
+                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <i data-lucide="trending-up" class="h-6 w-6 text-blue-600"></i>
+                                    <h3 class="text-lg font-semibold text-blue-900">Resumo de Metas - Atenção Primária</h3>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="bg-white p-4 rounded-lg border border-blue-100">
+                                        <h4 class="font-medium text-gray-800">Cobertura ESF</h4>
+                                        <div class="flex justify-between items-center mt-2">
+                                            <span class="text-2xl font-bold text-blue-600">87.3%</span>
+                                            <span class="text-sm text-gray-500">Meta: 85%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: 87.3%;"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-blue-100">
+                                        <h4 class="font-medium text-gray-800">Controle Hipertensão</h4>
+                                        <div class="flex justify-between items-center mt-2">
+                                            <span class="text-2xl font-bold text-yellow-600">78.5%</span>
+                                            <span class="text-sm text-gray-500">Meta: 80%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 78.5%;"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-blue-100">
+                                        <h4 class="font-medium text-gray-800">Cobertura Vacinal</h4>
+                                        <div class="flex justify-between items-center mt-2">
+                                            <span class="text-2xl font-bold text-green-600">91.4%</span>
+                                            <span class="text-sm text-gray-500">Meta: 90%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: 91.4%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Atenção Especializada Tab -->
+                    <div id="atencao-especializada" class="tab-content">
+                        <div class="space-y-8">
+                            <!-- Cabeçalho -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+                                <div class="flex items-center space-x-4">
+                                    <div class="p-3 bg-green-100 rounded-full">
+                                        <i data-lucide="stethoscope" class="h-8 w-8 text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <h1 class="text-2xl font-bold text-gray-900">
+                                            Média e Alta Complexidade (MAC)
+                                        </h1>
+                                        <p class="text-gray-600">
+                                            Regulação, especialidades, procedimentos e urgência/emergência
+                                        </p>
+                                        <div class="flex items-center mt-2 text-sm text-gray-500">
+                                            <i data-lucide="clock" class="h-4 w-4 mr-1"></i>
+                                            Última atualização: <span class="current-date"></span> às <span class="current-time"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Regulação e Tempo de Espera -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                                <div class="px-6 py-4 border-l-4 border-yellow-500 bg-yellow-50">
+                                    <h2 class="text-xl font-bold text-yellow-900">Regulação e Acesso</h2>
+                                    <p class="text-sm text-gray-600 mt-1">Tempos de espera e disponibilidade</p>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-yellow-50 border-yellow-200 text-yellow-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Tempo Médio Espera</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">23 dias</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Consultas especializadas</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">-8.5%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-yellow-50 border-yellow-200 text-yellow-800">
+                                                    <i data-lucide="clock" class="h-6 w-6 text-yellow-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-blue-50 border-blue-200 text-blue-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Agendamentos</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">1.247</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Mês atual</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">+3.2%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-blue-50 border-blue-200 text-blue-800">
+                                                    <i data-lucide="clipboard" class="h-6 w-6 text-blue-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-red-50 border-red-200 text-red-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Cancelamentos</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">156</p>
+                                                    <p class="text-sm text-gray-500 mt-1">12.5% do total</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">-15.2%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-red-50 border-red-200 text-red-800">
+                                                    <i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-red-50 border-red-200 text-red-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Taxa Absenteísmo</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">18.7%</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Faltas às consultas</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">-2.1%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-red-50 border-red-200 text-red-800">
+                                                    <i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Especialidades Médicas -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                                <div class="px-6 py-4 border-l-4 border-blue-500 bg-blue-50">
+                                    <h2 class="text-xl font-bold text-blue-900">Especialidades Médicas</h2>
+                                    <p class="text-sm text-gray-600 mt-1">Consultas por especialidade</p>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-red-50 border-red-200 text-red-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Cardiologia</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">245</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Consultas mês</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-red-50 border-red-200 text-red-800">
+                                                    <i data-lucide="heart" class="h-6 w-6 text-red-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-blue-50 border-blue-200 text-blue-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Dermatologia</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">167</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Consultas mês</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-blue-50 border-blue-200 text-blue-800">
+                                                    <i data-lucide="eye" class="h-6 w-6 text-blue-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-purple-50 border-purple-200 text-purple-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Psiquiatria</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">89</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Consultas mês</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-purple-50 border-purple-200 text-purple-800">
+                                                    <i data-lucide="brain" class="h-6 w-6 text-purple-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-indigo-50 border-indigo-200 text-indigo-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Neurologia</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">134</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Consultas mês</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-indigo-50 border-indigo-200 text-indigo-800">
+                                                    <i data-lucide="brain" class="h-6 w-6 text-indigo-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Performance -->
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-6 border border-green-200">
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <i data-lucide="trending-up" class="h-6 w-6 text-green-600"></i>
+                                    <h3 class="text-lg font-semibold text-green-900">Performance - Atenção Especializada</h3>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="bg-white p-4 rounded-lg border border-green-100">
+                                        <h4 class="font-medium text-gray-800">Tempo de Espera</h4>
+                                        <div class="flex justify-between items-center mt-2">
+                                            <span class="text-2xl font-bold text-yellow-600">23 dias</span>
+                                            <span class="text-sm text-gray-500">Meta: 30 dias</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: 77%;"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-green-100">
+                                        <h4 class="font-medium text-gray-800">Taxa Ocupação</h4>
+                                        <div class="flex justify-between items-center mt-2">
+                                            <span class="text-2xl font-bold text-yellow-600">76.8%</span>
+                                            <span class="text-sm text-gray-500">Meta: 80%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 76.8%;"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-green-100">
+                                        <h4 class="font-medium text-gray-800">Absenteísmo</h4>
+                                        <div class="flex justify-between items-center mt-2">
+                                            <span class="text-2xl font-bold text-green-600">18.7%</span>
+                                            <span class="text-sm text-gray-500">Meta: &lt;20%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: 81.3%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Redes Integração Tab -->
+                    <div id="redes-integracao" class="tab-content">
+                        <div class="space-y-8">
+                            <!-- Cabeçalho -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+                                <div class="flex items-center space-x-4">
+                                    <div class="p-3 bg-purple-100 rounded-full">
+                                        <i data-lucide="network" class="h-8 w-8 text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <h1 class="text-2xl font-bold text-gray-900">
+                                            Redes de Atenção / Integração
+                                        </h1>
+                                        <p class="text-gray-600">
+                                            RAPS, Rede Cegonha, Rede de Urgência e indicadores de vigilância
+                                        </p>
+                                        <div class="flex items-center mt-2 text-sm text-gray-500">
+                                            <i data-lucide="clock" class="h-4 w-4 mr-1"></i>
+                                            Última atualização: <span class="current-date"></span> às <span class="current-time"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RAPS -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                                <div class="px-6 py-4 border-l-4 border-purple-500 bg-purple-50">
+                                    <h2 class="text-xl font-bold text-purple-900">RAPS - Rede de Atenção Psicossocial</h2>
+                                    <p class="text-sm text-gray-600 mt-1">Saúde mental e atenção psicossocial</p>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-purple-50 border-purple-200 text-purple-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">CAPS Atendimentos</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">789</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Saúde Mental</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-purple-50 border-purple-200 text-purple-800">
+                                                    <i data-lucide="brain" class="h-6 w-6 text-purple-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-indigo-50 border-indigo-200 text-indigo-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Leitos Psiquiátricos</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">12</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Disponíveis</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-indigo-50 border-indigo-200 text-indigo-800">
+                                                    <i data-lucide="building-2" class="h-6 w-6 text-indigo-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-red-50 border-red-200 text-red-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Acolhimentos Crise</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">67</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Mês atual</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-red-50 border-red-200 text-red-800">
+                                                    <i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-purple-50 border-purple-200 text-purple-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Consultas Psiquiátricas</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">234</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Mês atual</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-purple-50 border-purple-200 text-purple-800">
+                                                    <i data-lucide="brain" class="h-6 w-6 text-purple-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Rede Cegonha -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                                <div class="px-6 py-4 border-l-4 border-pink-500 bg-pink-50">
+                                    <h2 class="text-xl font-bold text-pink-900">Rede Cegonha - Atenção Materno-Infantil</h2>
+                                    <p class="text-sm text-gray-600 mt-1">Cuidado integral à mulher e criança</p>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-green-50 border-green-200 text-green-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Partos Normais</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">68.4%</p>
+                                                    <p class="text-sm text-gray-500 mt-1">vs 31.6% cesáreas</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">+2.8%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-green-50 border-green-200 text-green-800">
+                                                    <i data-lucide="baby" class="h-6 w-6 text-green-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-green-50 border-green-200 text-green-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Mortalidade Materna</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">0</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Casos no ano</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-green-50 border-green-200 text-green-800">
+                                                    <i data-lucide="check-circle" class="h-6 w-6 text-green-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-yellow-50 border-yellow-200 text-yellow-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Mortalidade Infantil</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">9.2</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Por 1000 nascidos vivos</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">-12.3%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-yellow-50 border-yellow-200 text-yellow-800">
+                                                    <i data-lucide="alert-triangle" class="h-6 w-6 text-yellow-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-blue-50 border-blue-200 text-blue-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Nascimentos</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">147</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Mês atual</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-blue-50 border-blue-200 text-blue-800">
+                                                    <i data-lucide="baby" class="h-6 w-6 text-blue-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Vigilância Epidemiológica -->
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                                <div class="px-6 py-4 border-l-4 border-orange-500 bg-orange-50">
+                                    <h2 class="text-xl font-bold text-orange-900">Vigilância Epidemiológica</h2>
+                                    <p class="text-sm text-gray-600 mt-1">Monitoramento de doenças e agravos</p>
+                                </div>
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-yellow-50 border-yellow-200 text-yellow-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Dengue</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">23</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Casos confirmados</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">-45.2%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-yellow-50 border-yellow-200 text-yellow-800">
+                                                    <i data-lucide="alert-triangle" class="h-6 w-6 text-yellow-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-red-50 border-red-200 text-red-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Tuberculose</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">7</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Casos em tratamento</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-red-50 border-red-200 text-red-800">
+                                                    <i data-lucide="activity" class="h-6 w-6 text-red-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-purple-50 border-purple-200 text-purple-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">Hanseníase</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">3</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Casos em tratamento</p>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-purple-50 border-purple-200 text-purple-800">
+                                                    <i data-lucide="shield" class="h-6 w-6 text-purple-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="metric-card p-6 rounded-lg border-2 bg-green-50 border-green-200 text-green-800 bg-white shadow-sm">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-gray-600">COVID-19</p>
+                                                    <p class="text-3xl font-bold text-gray-900 mt-2">0.8%</p>
+                                                    <p class="text-sm text-gray-500 mt-1">Taxa positividade</p>
+                                                    <div class="flex items-center mt-2">
+                                                        <i data-lucide="trending-up" class="h-4 w-4 mr-1 text-green-600"></i>
+                                                        <span class="text-sm font-medium text-green-600">-78.5%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-3 rounded-full bg-green-50 border-green-200 text-green-800">
+                                                    <i data-lucide="syringe" class="h-6 w-6 text-green-600"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Indicadores de Integração -->
+                            <div class="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-6 border border-teal-200">
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <i data-lucide="network" class="h-6 w-6 text-teal-600"></i>
+                                    <h3 class="text-lg font-semibold text-teal-900">Indicadores de Integração das Redes</h3>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="bg-white p-3 rounded-lg border border-teal-100 flex items-center justify-between">
+                                        <div>
+                                            <p class="font-medium text-gray-800">RAPS - Cobertura Municipal</p>
+                                            <p class="text-sm text-gray-600">Todos os componentes implementados</p>
+                                        </div>
+                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Completa</span>
+                                    </div>
+                                    
+                                    <div class="bg-white p-3 rounded-lg border border-teal-100 flex items-center justify-between">
+                                        <div>
+                                            <p class="font-medium text-gray-800">Rede Cegonha - Mortalidade Materna</p>
+                                            <p class="text-sm text-gray-600">Meta: 0 óbitos - Status: Alcançada</p>
+                                        </div>
+                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Meta Alcançada</span>
+                                    </div>
+                                    
+                                    <div class="bg-white p-3 rounded-lg border border-teal-100 flex items-center justify-between">
+                                        <div>
+                                            <p class="font-medium text-gray-800">Rede de Urgência - Tempo SAMU</p>
+                                            <p class="text-sm text-gray-600">Meta: &lt;12min - Atual: 8.5min</p>
+                                        </div>
+                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Dentro da Meta</span>
+                                    </div>
+                                    
+                                    <div class="bg-white p-3 rounded-lg border border-teal-100 flex items-center justify-between">
+                                        <div>
+                                            <p class="font-medium text-gray-800">Vigilância - Controle de Endemias</p>
+                                            <p class="text-sm text-gray-600">Dengue: -45.2% vs ano anterior</p>
+                                        </div>
+                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Melhoria</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- 🔹 3. REDES DE ATENÇÃO / INTEGRAÇÃO -->
-        <div class="section">
-            <div class="section-header purple">
-                <h2>🔹 Redes de Atenção / Integração</h2>
-                <p>RAPS, Rede Cegonha, Rede de Urgência e indicadores de vigilância</p>
-            </div>
-            <div class="section-content">
-                <div class="grid">
-                    <div class="metric-card purple">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">CAPS Atendimentos</div>
-                                <div class="metric-value">789</div>
-                                <div class="metric-subtitle">Saúde Mental</div>
-                            </div>
-                            <div class="metric-icon purple">
-                                🧠
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card indigo">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Leitos Psiquiátricos</div>
-                                <div class="metric-value">12</div>
-                                <div class="metric-subtitle">Disponíveis</div>
-                            </div>
-                            <div class="metric-icon indigo">
-                                🏥
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card red">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Acolhimentos Crise</div>
-                                <div class="metric-value">67</div>
-                                <div class="metric-subtitle">Mês atual</div>
-                            </div>
-                            <div class="metric-icon red">
-                                ⚠️
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card green">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Partos Normais</div>
-                                <div class="metric-value">68.4%</div>
-                                <div class="metric-subtitle">vs 31.6% cesáreas</div>
-                                <div class="metric-trend positive">
-                                    📈 +2.8%
-                                </div>
-                            </div>
-                            <div class="metric-icon green">
-                                👶
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card red">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Mortalidade Infantil</div>
-                                <div class="metric-value">9.2</div>
-                                <div class="metric-subtitle">Por 1000 nascidos vivos</div>
-                                <div class="metric-trend positive">
-                                    📈 -12.3%
-                                </div>
-                            </div>
-                            <div class="metric-icon red">
-                                📊
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card green">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Mortalidade Materna</div>
-                                <div class="metric-value">0</div>
-                                <div class="metric-subtitle">Casos no ano</div>
-                            </div>
-                            <div class="metric-icon green">
-                                ✅
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card yellow">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Tempo Resposta SAMU</div>
-                                <div class="metric-value">8.5 min</div>
-                                <div class="metric-subtitle">Média urbana</div>
-                            </div>
-                            <div class="metric-icon yellow">
-                                🚑
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card red">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Hipertensão</div>
-                                <div class="metric-value">18.7%</div>
-                                <div class="metric-subtitle">Prevalência população</div>
-                            </div>
-                            <div class="metric-icon red">
-                                💓
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card yellow">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Diabetes</div>
-                                <div class="metric-value">7.3%</div>
-                                <div class="metric-subtitle">Prevalência população</div>
-                            </div>
-                            <div class="metric-icon yellow">
-                                🩸
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card yellow">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Obesidade</div>
-                                <div class="metric-value">23.1%</div>
-                                <div class="metric-subtitle">Prevalência adultos</div>
-                            </div>
-                            <div class="metric-icon yellow">
-                                ⚖️
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card blue">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Saúde Bucal</div>
-                                <div class="metric-value">2.847</div>
-                                <div class="metric-subtitle">Procedimentos mês</div>
-                            </div>
-                            <div class="metric-icon blue">
-                                🦷
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card yellow">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Dengue</div>
-                                <div class="metric-value">23</div>
-                                <div class="metric-subtitle">Casos confirmados</div>
-                                <div class="metric-trend positive">
-                                    📈 -45.2%
-                                </div>
-                            </div>
-                            <div class="metric-icon yellow">
-                                🦟
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 🔹 RECURSOS AVANÇADOS -->
-        <div class="section">
-            <div class="section-header blue">
-                <h2>🔹 Recursos Avançados</h2>
-                <p>Georreferenciamento, alertas, metas e financiamento</p>
-            </div>
-            <div class="section-content">
-                <div class="grid">
-                    <div class="metric-card green">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Meta Previne Brasil</div>
-                                <div class="metric-value">89.7%</div>
-                                <div class="metric-subtitle">Realizado vs Meta</div>
-                                <div class="metric-trend positive">
-                                    📈 +4.5%
-                                </div>
-                            </div>
-                            <div class="metric-icon green">
-                                🎯
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card blue">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Repasse Federal</div>
-                                <div class="metric-value">R$ 2,3M</div>
-                                <div class="metric-subtitle">Mês atual</div>
-                            </div>
-                            <div class="metric-icon blue">
-                                💰
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card indigo">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Custo per Capita</div>
-                                <div class="metric-value">R$ 247</div>
-                                <div class="metric-subtitle">Mês/habitante</div>
-                            </div>
-                            <div class="metric-icon indigo">
-                                📊
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="metric-card red">
-                        <div class="metric-card-content">
-                            <div class="metric-info">
-                                <div class="metric-title">Alertas Ativos</div>
-                                <div class="metric-value">3</div>
-                                <div class="metric-subtitle">Requerem atenção</div>
-                            </div>
-                            <div class="metric-icon red">
-                                🚨
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feature-box blue">
-                    <div class="feature-box-header">
-                        <span style="font-size: 20px;">📍</span>
-                        <h3>Mapa Georreferenciado</h3>
-                    </div>
-                    <div class="feature-box-content">
-                        <div class="feature-item">
-                            <h4>Cobertura por Bairro</h4>
-                            <p>Visualização da cobertura ESF por região</p>
-                        </div>
-                        <div class="feature-item">
-                            <h4>Incidência de Doenças</h4>
-                            <p>Mapa de calor de arboviroses</p>
-                        </div>
-                        <div class="feature-item">
-                            <h4>Tempo de Espera</h4>
-                            <p>Especialidades por localidade</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feature-box yellow">
-                    <div class="feature-box-header">
-                        <span style="font-size: 20px;">⚠️</span>
-                        <h3>Alertas em Tempo Real</h3>
-                    </div>
-                    <div>
-                        <div class="alert-item warning">
-                            <div class="alert-content">
-                                <h4>Baixa cobertura vacinal - Setor 7</h4>
-                                <p>Influenza: 67.2% (Meta: 90%)</p>
-                            </div>
-                            <span class="alert-badge warning">Atenção</span>
-                        </div>
-                        <div class="alert-item critical">
-                            <div class="alert-content">
-                                <h4>Aumento de espera - Cardiologia</h4>
-                                <p>Tempo médio: 35 dias (Meta: 30 dias)</p>
-                            </div>
-                            <span class="alert-badge critical">Crítico</span>
-                        </div>
-                        <div class="alert-item success">
-                            <div class="alert-content">
-                                <h4>Meta alcançada - Pré-natal</h4>
-                                <p>Cobertura: 94.3% (Meta: 90%)</p>
-                            </div>
-                            <span class="alert-badge success">Sucesso</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-item">
-                <span class="footer-icon" style="color: #2563eb;">⚡</span>
-                <span>Sistema integrado com e-SUS, SISREG, SINAN e DATASUS</span>
-            </div>
-            <div class="footer-item">
-                <span class="footer-icon" style="color: #059669;">✅</span>
-                <span>Dados atualizados em tempo real</span>
-            </div>
-            <div class="footer-item">
-                <span class="footer-icon" style="color: #7c3aed;">🛡️</span>
-                <span>Conformidade LGPD e padrões de segurança</span>
-            </div>
+            </main>
         </div>
     </div>
 
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     <script>
-        // Atualizar timestamp
-        function updateTimestamp() {
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Update date and time
+        function updateDateTime() {
             const now = new Date();
-            const dateStr = now.toLocaleDateString('pt-BR');
-            const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('lastUpdate').textContent = `Última atualização: ${dateStr} às ${timeStr}`;
+            const currentDate = now.toLocaleDateString('pt-BR');
+            const currentTime = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            
+            document.getElementById('current-date').textContent = currentDate;
+            document.getElementById('current-time').textContent = currentTime;
+            
+            // Update all instances
+            document.querySelectorAll('.current-date').forEach(el => {
+                el.textContent = currentDate;
+            });
+            document.querySelectorAll('.current-time').forEach(el => {
+                el.textContent = currentTime;
+            });
         }
 
-        // Inicializar
-        updateTimestamp();
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to selected tab button
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Close mobile menu if open
+            closeMobileMenu();
+        }
 
-        // Atualizar timestamp a cada minuto
-        setInterval(updateTimestamp, 60000);
+        // Mobile menu functionality
+        function openMobileMenu() {
+            document.getElementById('sidebar').classList.remove('-translate-x-full');
+            document.getElementById('mobile-backdrop').classList.remove('hidden');
+        }
 
-        // Adicionar interatividade aos cards
+        function closeMobileMenu() {
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+            document.getElementById('mobile-backdrop').classList.add('hidden');
+        }
+
+        // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Dashboard de Saúde carregado com sucesso!');
+            updateDateTime();
+            setInterval(updateDateTime, 60000); // Update every minute
+            
+            // Show default tab
+            showTab('visao-geral');
+            
+            // Tab button clicks
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    showTab(tabName);
+                });
+            });
+            
+            // Mobile menu buttons
+            document.getElementById('open-sidebar').addEventListener('click', openMobileMenu);
+            document.getElementById('close-sidebar').addEventListener('click', closeMobileMenu);
+            document.getElementById('mobile-backdrop').addEventListener('click', closeMobileMenu);
         });
     </script>
 </body>
