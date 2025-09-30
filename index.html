@@ -15,7 +15,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
+            color: #000000;
         }
 
         .container {
@@ -26,29 +26,98 @@
 
         .header {
             text-align: center;
-            color: white;
+            color: #000000;
             margin-bottom: 30px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-text {
+            text-align: left;
+        }
+
+        .prefeitura {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
+        .slogan {
+            font-style: italic;
+            color: #000000;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .secretaria {
+            font-weight: 600;
+            color: #000000;
+            font-size: 1.1rem;
+        }
+
+        .secretaria strong {
+            color: #1e3c72;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
         }
 
         .header h1 {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: #000000;
         }
 
         .header p {
             font-size: 1.1rem;
             opacity: 0.9;
             margin-bottom: 20px;
+            color: #000000;
         }
 
         .timestamp {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.9);
             padding: 10px 20px;
             border-radius: 25px;
             display: inline-block;
             backdrop-filter: blur(10px);
+            color: #000000;
+            border: 1px solid #e2e8f0;
         }
 
         /* Seção de Filtros */
@@ -75,7 +144,7 @@
         .filter-group label {
             font-weight: 600;
             margin-bottom: 8px;
-            color: #4a5568;
+            color: #000000;
             font-size: 0.9rem;
         }
 
@@ -87,6 +156,7 @@
             font-size: 0.95rem;
             transition: all 0.2s;
             background: white;
+            color: #000000;
         }
 
         .filter-group select:focus,
@@ -136,7 +206,7 @@
             border-radius: 10px;
             border-left: 4px solid #667eea;
             font-weight: 600;
-            color: #4a5568;
+            color: #000000;
         }
 
         /* Sistema de Abas */
@@ -172,7 +242,7 @@
             align-items: center;
             gap: 10px;
             text-align: left;
-            color: #4a5568;
+            color: #000000;
         }
 
         .tab-btn:hover {
@@ -248,7 +318,7 @@
         .card-title {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #2d3748;
+            color: #000000;
             line-height: 1.4;
             flex: 1;
             margin-right: 10px;
@@ -268,14 +338,16 @@
 
         .card-unit {
             font-size: 0.9rem;
-            color: #718096;
+            color: #000000;
             margin-bottom: 15px;
+            opacity: 0.8;
         }
 
         .card-source {
             font-size: 0.8rem;
-            color: #a0aec0;
+            color: #000000;
             font-style: italic;
+            opacity: 0.7;
         }
 
         .card-subcategory {
@@ -324,7 +396,7 @@
         .overview-title {
             font-size: 1rem;
             font-weight: 600;
-            color: #4a5568;
+            color: #000000;
             margin-bottom: 10px;
         }
 
@@ -337,7 +409,8 @@
 
         .overview-unit {
             font-size: 0.9rem;
-            color: #718096;
+            color: #000000;
+            opacity: 0.8;
         }
 
         .category-section {
@@ -347,7 +420,7 @@
         .category-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #2d3748;
+            color: #000000;
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 2px solid #e2e8f0;
@@ -418,7 +491,7 @@
         .loading-state, .no-results {
             text-align: center;
             padding: 60px 20px;
-            color: #718096;
+            color: #000000;
         }
 
         .loading-state.show, .no-results.show {
@@ -451,7 +524,7 @@
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+           100% { transform: rotate(360deg); }
         }
 
         /* Responsividade */
@@ -482,6 +555,20 @@
             .tabs-content {
                 padding: 20px;
             }
+
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .logo-container {
+                justify-content: center;
+            }
+
+            .logo-text {
+                text-align: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -504,15 +591,39 @@
             .overview-grid {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             }
+
+            .logo-img {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+
+            .prefeitura {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Cabeçalho -->
+        <!-- Cabeçalho com Logo -->
         <header class="header">
-            <h1>🏥 Dashboard de Saúde Pública</h1>
-            <p>Parauapebas - Pará | Indicadores e Métricas de Saúde de Parauapebas</p>
+            <div class="header-top">
+                <div class="logo-container">
+                    <div class="logo-img">🏛️</div>
+                    <div class="logo-text">
+                        <div class="prefeitura">PREFEITURA DE PARAUAPEBAS</div>
+                        <div class="slogan">Um novo tempo, uma nova história</div>
+                        <div class="secretaria">
+                            <strong>SEMSA</strong> - Secretaria Municipal de Saúde
+                        </div>
+                    </div>
+                </div>
+                <div class="header-title">
+                    <h1>🏥 Dashboard de Saúde Pública</h1>
+                    <p>Parauapebas - Pará | Indicadores e Métricas de Saúde Baseados em Dados Reais</p>
+                </div>
+            </div>
             <div class="timestamp">
                 ⏰ Última atualização: <span id="currentTime"></span>
             </div>
@@ -655,23 +766,24 @@
     </div>
 
     <script>
-        // Base de dados dos indicadores - CORRIGIDA com datas completas
+        // Base de dados dos indicadores - ATUALIZADA com a população dinâmica
         const indicadores = [
-            // IBGE - População
+            // IBGE - População (será atualizada via API)
             { 
+                id: 'populacao',
                 categoria: "IBGE", 
                 subcategoria: "População", 
-                indicador: "Número de habitantes", 
-                valor: "217.635", 
+                indicador: "População estimada", 
+                valor: "Carregando...", 
                 unidade: "habitantes", 
                 fonte: "IBGE", 
                 icon: "👥",
-                data: "2024-12-31",
+                data: "2025",
                 tendencia: "up"
             },
             
             // Atenção Primária (APS)
-            { categoria: "Atenção Primária (APS)", subcategoria: "Cobertura", indicador: "Cobertura ACS", valor: "89.4%", unidade: "população cadastrada", fonte: "PEC", icon: "🏠", data: "2025-03-01", tendencia: "up" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Cobertura", indicador: "Cobertura ACS Financiados", valor: "89.4%", unidade: "população cadastrada", fonte: "PEC", icon: "🏠", data: "2025-03-01", tendencia: "up" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de ACS", indicador: "ACS Ativos", valor: "312", unidade: "agentes comunitários", fonte: "PEC", icon: "👨‍⚕️", data: "2025-03-01", tendencia: "stable" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de ACS", indicador: "Quantidade de ACS Cobertura", valor: "289", unidade: "agentes em cobertura", fonte: "PEC", icon: "📋", data: "2025-03-01", tendencia: "up" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Cobertura", indicador: "Cobertura APS", valor: "42", unidade: "equipes ativas", fonte: "PEC", icon: "⚕️", data: "2025-03-01", tendencia: "stable" },
@@ -689,7 +801,7 @@
             { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Preventivos Solicitados", valor: "2.890", unidade: "exames solicitados", fonte: "PEC", icon: "📝", data: "2025-02-01", tendencia: "up" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Preventivos Avaliados", valor: "2.045", unidade: "exames avaliados", fonte: "PEC", icon: "✅", data: "2025-02-01", tendencia: "up" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Puericultura", valor: "3.278", unidade: "crianças acompanhadas", fonte: "PEC", icon: "👶", data: "2025-02-01", tendencia: "up" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Saúde do Idoso", valor: "5.134", unidade: "idosos acompanhados", fonte: "PEC", icon: "👴", data: "2025-02-01", tendencia: "up" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Saúde do Idoso", valor: "5.134", unidade: "idosos acompanhadas", fonte: "PEC", icon: "👴", data: "2025-02-01", tendencia: "up" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Doenças Crônicas", indicador: "Hipertensos", valor: "12.456", unidade: "pacientes cadastrados", fonte: "PEC", icon: "❤️", data: "2025-02-01", tendencia: "up" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Doenças Crônicas", indicador: "Diabéticos", valor: "4.789", unidade: "pacientes cadastrados", fonte: "PEC", icon: "🩸", data: "2025-02-01", tendencia: "up" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Prevenção", indicador: "Cobertura Vacinal", valor: "91.7%", unidade: "poliomielite + influenza", fonte: "PEC", icon: "💉", data: "2025-02-01", tendencia: "up" },
@@ -743,6 +855,46 @@
         let dadosFiltrados = [...indicadores];
         let abaAtual = 'overview';
         let searchTimeout;
+
+        // Função para buscar dados da população do IBGE
+        function buscarPopulacaoIBGE() {
+            const codMunicipio = 1505536; // Código do município de Parauapebas
+            const url = `https://apisidra.ibge.gov.br/values/t/6579/n6/${codMunicipio}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Último registro = ano mais atual
+                    const ultimo = data[data.length - 1];
+                    const ano = ultimo.D2N;
+                    const populacao = parseInt(ultimo.V).toLocaleString('pt-BR');
+
+                    // Atualizar o indicador de população
+                    const indicadorPopulacao = indicadores.find(ind => ind.id === 'populacao');
+                    if (indicadorPopulacao) {
+                        indicadorPopulacao.valor = populacao;
+                        indicadorPopulacao.data = ano;
+                        
+                        // Re-renderizar se necessário
+                        if (abaAtual === 'overview' || abaAtual === 'ibge') {
+                            if (abaAtual === 'overview') {
+                                renderizarVisaoGeral();
+                            } else {
+                                renderizarIndicadores();
+                            }
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.error('Erro ao buscar dados do IBGE:', err);
+                    // Em caso de erro, usar valor estático
+                    const indicadorPopulacao = indicadores.find(ind => ind.id === 'populacao');
+                    if (indicadorPopulacao) {
+                        indicadorPopulacao.valor = "305.771";
+                        indicadorPopulacao.data = "2025";
+                    }
+                });
+        }
 
         // Função para atualizar o timestamp
         function updateTimestamp() {
@@ -844,6 +996,10 @@
         // Função para formatar data
         function formatarData(dataString) {
             if (!dataString) return '';
+            // Se for apenas um ano (4 dígitos)
+            if (/^\d{4}$/.test(dataString)) {
+                return dataString;
+            }
             const data = new Date(dataString);
             return data.toLocaleDateString('pt-BR');
         }
@@ -859,8 +1015,8 @@
             
             // Selecionar indicadores principais para cards de resumo
             const indicadoresResumo = [
-                indicadores.find(ind => ind.indicador === "Número de habitantes"),
-                indicadores.find(ind => ind.indicador === "Cobertura ACS"),
+                indicadores.find(ind => ind.id === 'populacao'),
+                indicadores.find(ind => ind.indicador === "Cobertura ACS Financiados"),
                 indicadores.find(ind => ind.indicador === "Consultas Médicas"),
                 indicadores.find(ind => ind.indicador === "Taxa Ocupação Leitos"),
                 indicadores.find(ind => ind.indicador === "CAPS Atendimentos"),
@@ -1060,6 +1216,10 @@
             
             updateTimestamp();
             atualizarSubcategorias(); // Inicializar subcategorias
+            
+            // Buscar dados da população do IBGE
+            buscarPopulacaoIBGE();
+            
             renderizarVisaoGeral(); // Iniciar com a visão geral
             atualizarEstatisticasFiltros();
             
