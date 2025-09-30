@@ -530,7 +530,7 @@
     </div>
 
     <script>
-        // Base de dados dos indicadores baseada no Excel fornecido
+        // Base de dados dos indicadores - CORRIGIDA com datas completas
         const indicadores = [
             // IBGE - População
             { 
@@ -548,53 +548,70 @@
             { categoria: "Atenção Primária (APS)", subcategoria: "Cobertura", indicador: "Cobertura ACS", valor: "89.4%", unidade: "população cadastrada", fonte: "PEC", icon: "🏠", data: "2025-03-01" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de ACS", indicador: "ACS Ativos", valor: "312", unidade: "agentes comunitários", fonte: "PEC", icon: "👨‍⚕️", data: "2025-03-01" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de ACS", indicador: "Quantidade de ACS Cobertura", valor: "289", unidade: "agentes em cobertura", fonte: "PEC", icon: "📋", data: "2025-03-01" },
-
-            { categoria: "Atenção Primária (APS)", subcategoria: "Cobertura", indicador: "Cobertura APS", valor: "42", unidade: "equipes ativas", fonte: "PEC", icon: "⚕️" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Cobertura", indicador: "Cobertura SB", valor: "28", unidade: "equipes de saúde bucal", fonte: "PEC", icon: "🦷" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de Equipes", indicador: "ESF", valor: "38", unidade: "equipes de saúde da família", fonte: "PEC", icon: "👨‍⚕️" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de Equipes", indicador: "EAP", valor: "4", unidade: "equipes de atenção primária", fonte: "PEC", icon: "👩‍⚕️" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de Equipes", indicador: "ESB", valor: "28", unidade: "equipes de saúde bucal", fonte: "PEC", icon: "🦷" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de Equipes", indicador: "Emult", valor: "12", unidade: "equipes multiprofissionais", fonte: "PEC", icon: "👥" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Cobertura", indicador: "Cobertura APS", valor: "42", unidade: "equipes ativas", fonte: "PEC", icon: "⚕️", data: "2025-03-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Cobertura", indicador: "Cobertura SB", valor: "28", unidade: "equipes de saúde bucal", fonte: "PEC", icon: "🦷", data: "2025-03-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de Equipes", indicador: "ESF", valor: "38", unidade: "equipes de saúde da família", fonte: "PEC", icon: "👨‍⚕️", data: "2025-03-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de Equipes", indicador: "EAP", valor: "4", unidade: "equipes de atenção primária", fonte: "PEC", icon: "👩‍⚕️", data: "2025-03-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de Equipes", indicador: "ESB", valor: "28", unidade: "equipes de saúde bucal", fonte: "PEC", icon: "🦷", data: "2025-03-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de Equipes", indicador: "Emult", valor: "12", unidade: "equipes multiprofissionais", fonte: "PEC", icon: "👥", data: "2025-03-01" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Quantidade de Equipes", indicador: "EAPP", valor: "2", unidade: "equipes de atenção primária prisional", fonte: "PEC", icon: "🏠", data: "2025-03-01" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Consultas", indicador: "Consultas Médicas", valor: "8.247", unidade: "consultas realizadas", fonte: "PEC", icon: "👨‍⚕️", data: "2025-02-01" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Consultas", indicador: "Consultas Enfermagem", valor: "6.891", unidade: "consultas de enfermagem", fonte: "PEC", icon: "👩‍⚕️" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Atendimentos", indicador: "Atend. Multiprofissional", valor: "3.456", unidade: "atendimentos realizados", fonte: "PEC", icon: "👥" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Pré-natal", valor: "1.834", unidade: "gestantes acompanhadas", fonte: "PEC", icon: "🤰" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Preventivos Realizados", valor: "2.167", unidade: "exames realizados", fonte: "PEC", icon: "🔬" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Preventivos Solicitados", valor: "2.890", unidade: "exames solicitados", fonte: "PEC", icon: "📝" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Preventivos Avaliados", valor: "2.045", unidade: "exames avaliados", fonte: "PEC", icon: "✅" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Puericultura", valor: "3.278", unidade: "crianças acompanhadas", fonte: "PEC", icon: "👶" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Saúde do Idoso", valor: "5.134", unidade: "idosos acompanhados", fonte: "PEC", icon: "👴" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Doenças Crônicas", indicador: "Hipertensos", valor: "12.456", unidade: "pacientes cadastrados", fonte: "PEC", icon: "❤️" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Consultas", indicador: "Consultas Enfermagem", valor: "6.891", unidade: "consultas de enfermagem", fonte: "PEC", icon: "👩‍⚕️", data: "2025-02-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Atendimentos", indicador: "Atend. Multiprofissional", valor: "3.456", unidade: "atendimentos realizados", fonte: "PEC", icon: "👥", data: "2025-02-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Pré-natal", valor: "1.834", unidade: "gestantes acompanhadas", fonte: "PEC", icon: "🤰", data: "2025-02-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Preventivos Realizados", valor: "2.167", unidade: "exames realizados", fonte: "PEC", icon: "🔬", data: "2025-02-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Preventivos Solicitados", valor: "2.890", unidade: "exames solicitados", fonte: "PEC", icon: "📝", data: "2025-02-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Preventivos Avaliados", valor: "2.045", unidade: "exames avaliados", fonte: "PEC", icon: "✅", data: "2025-02-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Puericultura", valor: "3.278", unidade: "crianças acompanhadas", fonte: "PEC", icon: "👶", data: "2025-02-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Programas Específicos", indicador: "Saúde do Idoso", valor: "5.134", unidade: "idosos acompanhados", fonte: "PEC", icon: "👴", data: "2025-02-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Doenças Crônicas", indicador: "Hipertensos", valor: "12.456", unidade: "pacientes cadastrados", fonte: "PEC", icon: "❤️", data: "2025-02-01" },
             { categoria: "Atenção Primária (APS)", subcategoria: "Doenças Crônicas", indicador: "Diabéticos", valor: "4.789", unidade: "pacientes cadastrados", fonte: "PEC", icon: "🩸", data: "2025-02-01" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Prevenção", indicador: "Cobertura Vacinal", valor: "91.7%", unidade: "poliomielite + influenza", fonte: "PEC", icon: "💉" },
-            { categoria: "Atenção Primária (APS)", subcategoria: "Inovação", indicador: "Teleconsultas", valor: "1.567", unidade: "teleconsultas realizadas", fonte: "PEC", icon: "💻" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Prevenção", indicador: "Cobertura Vacinal", valor: "91.7%", unidade: "poliomielite + influenza", fonte: "PEC", icon: "💉", data: "2025-02-01" },
+            { categoria: "Atenção Primária (APS)", subcategoria: "Inovação", indicador: "Teleconsultas", valor: "1.567", unidade: "teleconsultas realizadas", fonte: "PEC", icon: "💻", data: "2025-02-01" },
 
             // Média e Alta Complexidade (MAC)
-            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Regulação", indicador: "Tempo Médio Espera", valor: "28", unidade: "dias para consultas especializadas", fonte: "DIRCA", icon: "⏱️" },
-            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Especialidades", indicador: "Cardiologia", valor: "567", unidade: "consultas realizadas", fonte: "PEC", icon: "❤️" },
-            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Especialidades", indicador: "Dermatologia", valor: "423", unidade: "consultas realizadas", fonte: "PEC", icon: "🧴" },
-            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Especialidades", indicador: "Psiquiatria", valor: "234", unidade: "consultas realizadas", fonte: "PEC", icon: "🧠" },
-            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Exames", indicador: "Raio-X", valor: "1.234", unidade: "exames realizados", fonte: "PEC", icon: "📷" },
-            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Exames", indicador: "Ultrassonografia", valor: "890", unidade: "exames realizados", fonte: "PEC", icon: "🔍" },
-            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Exames", indicador: "Tomografia", valor: "156", unidade: "exames realizados", fonte: "SIA", icon: "🏥" },
+            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Regulação", indicador: "Tempo Médio Espera", valor: "28", unidade: "dias para consultas especializadas", fonte: "DIRCA", icon: "⏱️", data: "2025-02-01" },
+            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Especialidades", indicador: "Cardiologia", valor: "567", unidade: "consultas realizadas", fonte: "PEC", icon: "❤️", data: "2025-02-01" },
+            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Especialidades", indicador: "Dermatologia", valor: "423", unidade: "consultas realizadas", fonte: "PEC", icon: "🧴", data: "2025-02-01" },
+            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Especialidades", indicador: "Psiquiatria", valor: "234", unidade: "consultas realizadas", fonte: "PEC", icon: "🧠", data: "2025-02-01" },
+            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Exames", indicador: "Raio-X", valor: "1.234", unidade: "exames realizados", fonte: "PEC", icon: "📷", data: "2025-02-01" },
+            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Exames", indicador: "Ultrassonografia", valor: "890", unidade: "exames realizados", fonte: "PEC", icon: "🔍", data: "2025-02-01" },
+            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Exames", indicador: "Tomografia", valor: "156", unidade: "exames realizados", fonte: "SIA", icon: "🏥", data: "2025-02-01" },
             { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Internação", indicador: "Cirurgias Eletivas", valor: "78", unidade: "procedimentos realizados", fonte: "HGP", icon: "🔪", data: "2025-02-20" },
-            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Internação", indicador: "Taxa Ocupação Leitos", valor: "82.4%", unidade: "leitos hospitalares ocupados", fonte: "HGP", icon: "🛏️" },
-            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Internação", indicador: "Tempo Médio Internação", valor: "4.2", unidade: "dias (média geral)", fonte: "HGP", icon: "📅" },
-            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Urgência/Emergência", indicador: "Atendimentos UPA", valor: "3.567", unidade: "atendimentos realizados", fonte: "PEC", icon: "🚨" },
+            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Internação", indicador: "Taxa Ocupação Leitos", valor: "82.4%", unidade: "leitos hospitalares ocupados", fonte: "HGP", icon: "🛏️", data: "2025-02-01" },
+            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Internação", indicador: "Tempo Médio Internação", valor: "4.2", unidade: "dias (média geral)", fonte: "HGP", icon: "📅", data: "2025-02-01" },
+            { categoria: "Média e Alta Complexidade (MAC)", subcategoria: "Urgência/Emergência", indicador: "Atendimentos UPA", valor: "3.567", unidade: "atendimentos realizados", fonte: "PEC", icon: "🚨", data: "2025-02-01" },
 
             // Redes de Atenção / Integração
-            { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde Mental (RAPS)", indicador: "CAPS Atendimentos", valor: "2.145", unidade: "atendimentos realizados", fonte: "PEC", icon: "🧠" },
-            { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde Mental (RAPS)", indicador: "Leitos Psiquiátricos", valor: "24", unidade: "leitos disponíveis", fonte: "PEC", icon: "🛏️" },
-            { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde Mental (RAPS)", indicador: "Acolhimentos Crise", valor: "189", unidade: "acolhimentos realizados", fonte: "PEC", icon: "🤝" },
-            { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde da Mulher/Criança", indicador: "Partos Normais", valor: "1.456", unidade: "partos realizados", fonte: "SAI", icon: "👶" },
-            { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde da Mulher/Criança", indicador: "Mortalidade Infantil", valor: "8.9", unidade: "por 1000 nascidos vivos", fonte: "SIM", icon: "👼" },
+            { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde Mental (RAPS)", indicador: "CAPS Atendimentos", valor: "2.145", unidade: "atendimentos realizados", fonte: "PEC", icon: "🧠", data: "2025-02-01" },
+            { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde Mental (RAPS)", indicador: "Leitos Psiquiátricos", valor: "24", unidade: "leitos disponíveis", fonte: "PEC", icon: "🛏️", data: "2025-02-01" },
+            { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde Mental (RAPS)", indicador: "Acolhimentos Crise", valor: "189", unidade: "acolhimentos realizados", fonte: "PEC", icon: "🤝", data: "2025-02-01" },
+            { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde da Mulher/Criança", indicador: "Partos Normais", valor: "1.456", unidade: "partos realizados", fonte: "SAI", icon: "👶", data: "2025-02-01" },
+            { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde da Mulher/Criança", indicador: "Mortalidade Infantil", valor: "8.9", unidade: "por 1000 nascidos vivos", fonte: "SIM", icon: "👼", data: "2024-12-31" },
             { categoria: "Redes de Atenção / Integração", subcategoria: "Saúde da Mulher/Criança", indicador: "Mortalidade Materna", valor: "2", unidade: "óbitos registrados", fonte: "SIM", icon: "😢", data: "2024-12-31" },
-            { categoria: "Redes de Atenção / Integração", subcategoria: "Urgência", indicador: "Tempo Resposta SAMU", valor: "12.5", unidade: "minutos (tempo médio)", fonte: "SAMU", icon: "🚑" }
+            { categoria: "Redes de Atenção / Integração", subcategoria: "Urgência", indicador: "Tempo Resposta SAMU", valor: "12.5", unidade: "minutos (tempo médio)", fonte: "SAMU", icon: "🚑", data: "2025-02-01" }
         ];
+
+        // Cache de elementos DOM para melhor performance
+        const domElements = {
+            currentTime: document.getElementById('currentTime'),
+            categoryFilter: document.getElementById('categoryFilter'),
+            subcategoryFilter: document.getElementById('subcategoryFilter'),
+            sourceFilter: document.getElementById('sourceFilter'),
+            dateFilter: document.getElementById('dateFilter'),
+            searchFilter: document.getElementById('searchFilter'),
+            filterStats: document.getElementById('filterStats'),
+            loadingState: document.getElementById('loadingState'),
+            noResults: document.getElementById('noResults'),
+            ibgeGrid: document.getElementById('ibgeGrid'),
+            apsGrid: document.getElementById('apsGrid'),
+            macGrid: document.getElementById('macGrid'),
+            redesGrid: document.getElementById('redesGrid')
+        };
 
         let dadosFiltrados = [...indicadores];
         let abaAtual = 'ibge';
+        let searchTimeout;
 
         // Função para atualizar o timestamp
         function updateTimestamp() {
@@ -607,7 +624,7 @@
                 minute: '2-digit',
                 timeZone: 'America/Sao_Paulo'
             };
-            document.getElementById('currentTime').textContent = agora.toLocaleDateString('pt-BR', opcoes);
+            domElements.currentTime.textContent = agora.toLocaleDateString('pt-BR', opcoes);
         }
 
         // Função para trocar de aba
@@ -637,18 +654,25 @@
                     </div>
                     <div class="card-value">${indicador.valor}</div>
                     <div class="card-unit">${indicador.unidade}</div>
-                    <div class="card-source">Fonte: ${indicador.fonte}</div>
+                    <div class="card-source">Fonte: ${indicador.fonte}${indicador.data ? ` | ${formatarData(indicador.data)}` : ''}</div>
                 </div>
             `;
+        }
+
+        // Função para formatar data
+        function formatarData(dataString) {
+            if (!dataString) return '';
+            const data = new Date(dataString);
+            return data.toLocaleDateString('pt-BR');
         }
 
         // Função para renderizar indicadores
         function renderizarIndicadores() {
             const containers = {
-                'ibge': document.getElementById('ibgeGrid'),
-                'aps': document.getElementById('apsGrid'),
-                'mac': document.getElementById('macGrid'),
-                'redes': document.getElementById('redesGrid')
+                'ibge': domElements.ibgeGrid,
+                'aps': domElements.apsGrid,
+                'mac': domElements.macGrid,
+                'redes': domElements.redesGrid
             };
 
             // Limpar todos os containers
@@ -676,11 +700,10 @@
             });
 
             // Mostrar/ocultar mensagem de sem resultados
-            const semResultados = document.getElementById('noResults');
             if (temResultados) {
-                semResultados.classList.remove('show');
+                domElements.noResults.classList.remove('show');
             } else {
-                semResultados.classList.add('show');
+                domElements.noResults.classList.add('show');
             }
 
             atualizarEstatisticasFiltros();
@@ -688,34 +711,39 @@
 
         // Função para filtrar indicadores
         function filtrarIndicadores() {
-            const filtroCategoria = document.getElementById('categoryFilter').value;
-            const filtroSubcategoria = document.getElementById('subcategoryFilter').value;
-            const filtroFonte = document.getElementById('sourceFilter').value;
-            const filtroData = document.getElementById('dateFilter').value;
-            const filtroBusca = document.getElementById('searchFilter').value.toLowerCase();
+            const filtroCategoria = domElements.categoryFilter.value;
+            const filtroSubcategoria = domElements.subcategoryFilter.value;
+            const filtroFonte = domElements.sourceFilter.value;
+            const filtroData = domElements.dateFilter.value;
+            const filtroBusca = domElements.searchFilter.value.toLowerCase();
 
             // Mostrar loading
-            const loading = document.getElementById('loadingState');
-            loading.classList.add('show');
+            domElements.loadingState.classList.add('show');
 
+            // Usar setTimeout para dar tempo da animação de loading aparecer
             setTimeout(() => {
-                dadosFiltrados = indicadores.filter(ind => {
-                    const correspondeCategoria = !filtroCategoria || ind.categoria === filtroCategoria;
-                    const correspondeSubcategoria = !filtroSubcategoria || ind.subcategoria === filtroSubcategoria;
-                    const correspondeFonte = !filtroFonte || ind.fonte.includes(filtroFonte);
-                    const correspondeData = !filtroData || ind.data === filtroData;
-                    const correspondeBusca = !filtroBusca || 
-                        ind.indicador.toLowerCase().includes(filtroBusca) ||
-                        ind.categoria.toLowerCase().includes(filtroBusca) ||
-                        ind.subcategoria.toLowerCase().includes(filtroBusca) ||
-                        ind.unidade.toLowerCase().includes(filtroBusca);
-                    
-                    return correspondeCategoria && correspondeSubcategoria && correspondeFonte && correspondeData && correspondeBusca;
-                });
+                try {
+                    dadosFiltrados = indicadores.filter(ind => {
+                        const correspondeCategoria = !filtroCategoria || ind.categoria === filtroCategoria;
+                        const correspondeSubcategoria = !filtroSubcategoria || ind.subcategoria === filtroSubcategoria;
+                        const correspondeFonte = !filtroFonte || ind.fonte.includes(filtroFonte);
+                        const correspondeData = !filtroData || ind.data === filtroData;
+                        const correspondeBusca = !filtroBusca || 
+                            ind.indicador.toLowerCase().includes(filtroBusca) ||
+                            ind.categoria.toLowerCase().includes(filtroBusca) ||
+                            ind.subcategoria.toLowerCase().includes(filtroBusca) ||
+                            ind.unidade.toLowerCase().includes(filtroBusca);
+                        
+                        return correspondeCategoria && correspondeSubcategoria && correspondeFonte && correspondeData && correspondeBusca;
+                    });
 
-                renderizarIndicadores();
-                atualizarSubcategorias();
-                loading.classList.remove('show');
+                    renderizarIndicadores();
+                    atualizarSubcategorias();
+                } catch (error) {
+                    console.error('Erro ao filtrar indicadores:', error);
+                } finally {
+                    domElements.loadingState.classList.remove('show');
+                }
             }, 300);
         }
 
@@ -723,22 +751,20 @@
         function atualizarEstatisticasFiltros() {
             const total = dadosFiltrados.length;
             const totalOriginal = indicadores.length;
-            const statsElement = document.getElementById('filterStats');
             
             if (total === totalOriginal) {
-                statsElement.innerHTML = `📊 Mostrando todos os <strong>${total}</strong> indicadores de saúde`;
+                domElements.filterStats.innerHTML = `📊 Mostrando todos os <strong>${total}</strong> indicadores de saúde`;
             } else {
-                statsElement.innerHTML = `📊 Mostrando <strong>${total}</strong> de <strong>${totalOriginal}</strong> indicadores de saúde`;
+                domElements.filterStats.innerHTML = `📊 Mostrando <strong>${total}</strong> de <strong>${totalOriginal}</strong> indicadores de saúde`;
             }
         }
 
         // Função para atualizar filtro de subcategorias
         function atualizarSubcategorias() {
-            const filtroCategoria = document.getElementById('categoryFilter').value;
-            const selectSubcategoria = document.getElementById('subcategoryFilter');
+            const filtroCategoria = domElements.categoryFilter.value;
             
             // Limpar opções existentes
-            selectSubcategoria.innerHTML = '<option value="">Todas as Sub-categorias</option>';
+            domElements.subcategoryFilter.innerHTML = '<option value="">Todas as Sub-categorias</option>';
             
             if (filtroCategoria) {
                 const subcategorias = [...new Set(
@@ -748,33 +774,48 @@
                 )].sort();
                 
                 subcategorias.forEach(sub => {
-                    selectSubcategoria.innerHTML += `<option value="${sub}">${sub}</option>`;
+                    domElements.subcategoryFilter.innerHTML += `<option value="${sub}">${sub}</option>`;
+                });
+            } else {
+                // Se não há categoria selecionada, mostrar todas as subcategorias
+                const todasSubcategorias = [...new Set(indicadores.map(ind => ind.subcategoria))].sort();
+                todasSubcategorias.forEach(sub => {
+                    domElements.subcategoryFilter.innerHTML += `<option value="${sub}">${sub}</option>`;
                 });
             }
         }
 
         // Função para limpar todos os filtros
         function clearAllFilters() {
-            document.getElementById('categoryFilter').value = '';
-            document.getElementById('subcategoryFilter').value = '';
-            document.getElementById('sourceFilter').value = '';
-            document.getElementById('dateFilter').value = '';
-            document.getElementById('searchFilter').value = '';
+            domElements.categoryFilter.value = '';
+            domElements.subcategoryFilter.value = '';
+            domElements.sourceFilter.value = '';
+            domElements.dateFilter.value = '';
+            domElements.searchFilter.value = '';
             
             filtrarIndicadores();
         }
 
+        // Função com debounce para busca
+        function debounce(func, wait) {
+            return function executedFunction(...args) {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
         // Event listeners para filtros
-        document.getElementById('categoryFilter').addEventListener('change', function() {
-            document.getElementById('subcategoryFilter').value = '';
-            document.getElementById('dateFilter').value = '';
+        domElements.categoryFilter.addEventListener('change', function() {
+            domElements.subcategoryFilter.value = '';
             filtrarIndicadores();
         });
 
-        document.getElementById('subcategoryFilter').addEventListener('change', filtrarIndicadores);
-        document.getElementById('sourceFilter').addEventListener('change', filtrarIndicadores);
-        document.getElementById('dateFilter').addEventListener('change', filtrarIndicadores);
-        document.getElementById('searchFilter').addEventListener('input', filtrarIndicadores);
+        domElements.subcategoryFilter.addEventListener('change', filtrarIndicadores);
+        domElements.sourceFilter.addEventListener('change', filtrarIndicadores);
+        domElements.dateFilter.addEventListener('change', filtrarIndicadores);
+        
+        // Aplicar debounce na busca para melhor performance
+        domElements.searchFilter.addEventListener('input', debounce(filtrarIndicadores, 300));
 
         // Inicialização da aplicação
         document.addEventListener('DOMContentLoaded', function() {
@@ -782,6 +823,7 @@
             console.log(`Total de indicadores carregados: ${indicadores.length}`);
             
             updateTimestamp();
+            atualizarSubcategorias(); // Inicializar subcategorias
             renderizarIndicadores();
             atualizarEstatisticasFiltros();
             
